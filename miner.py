@@ -265,8 +265,11 @@ def mine_block(stored_targets, prev_hash):
 
     while retries <= max_retries:
         # Make the POST request
-        response = requests.post('http://xenminer.mooo.com/verify', json=payload)
-
+        try:
+            response = requests.post('http://xenminer.mooo.com/verify', json=payload, timeout=10)
+        except Exception as e:
+            print("An error occurred:", e)
+            continue
         # Print the HTTP status code
         print("HTTP Status Code:", response.status_code)
 
